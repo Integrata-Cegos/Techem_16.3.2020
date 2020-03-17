@@ -1,4 +1,4 @@
-package de.techem.wurst.books;
+package de.techem.wurst;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

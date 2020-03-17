@@ -30,7 +30,6 @@ public class ContentWebServiceApplication {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.any()).build();
 	}
-
 	@Bean
 	@Qualifier("contentStore")
 	Map<String, Content> contentStore() {

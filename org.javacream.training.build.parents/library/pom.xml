@@ -12,7 +12,7 @@
 		<relativePath />
 	</parent>
 	<properties>
-		<repository_base_url>http://10.12.6.1:8081</repository_base_url>
+		<repository_base_url>http://localhost:8081</repository_base_url>
 	</properties>
 	
 	

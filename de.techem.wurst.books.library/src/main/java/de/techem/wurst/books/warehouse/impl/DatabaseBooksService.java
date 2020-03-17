@@ -6,13 +6,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import de.techem.wurst.store.api.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.techem.wurst.books.isbngenerator.api.IsbnGenerator;
 import de.techem.wurst.books.isbngenerator.api.IsbnGenerator.SequenceStrategy;
+import de.techem.wurst.books.store.RestStoreService;
 import de.techem.wurst.books.warehouse.api.Book;
 import de.techem.wurst.books.warehouse.api.BookException;
 import de.techem.wurst.books.warehouse.api.BooksService;
@@ -24,12 +24,15 @@ public class DatabaseBooksService implements BooksService {
 	@SequenceStrategy
 	private IsbnGenerator isbnGenerator;
 	
+	//@Autowired
+	//private StoreService storeService;
+	
+//	public void setStoreService(StoreService storeService) {
+//		this.storeService = storeService;
+//	}
+	
 	@Autowired
-	private StoreService storeService;
-
-	public void setStoreService(StoreService storeService) {
-		this.storeService = storeService;
-	}
+	private RestStoreService restStoreService;
 
 	public void setIsbnGenerator(IsbnGenerator isbnGenerator) {
 		this.isbnGenerator = isbnGenerator;
@@ -56,7 +59,7 @@ public class DatabaseBooksService implements BooksService {
 	public Book findBookByIsbn(String isbn) throws BookException {
 		try {
 			Book result = entityManager.find(Book.class, isbn);
-			result.setAvailable(storeService.getStock("books", isbn) > 0);
+			result.setAvailable(restStoreService.getStock("books", isbn) > 0);
 			return result;
 		} catch (NullPointerException e) {
 			throw new BookException(BookException.BookExceptionType.NOT_FOUND, isbn);

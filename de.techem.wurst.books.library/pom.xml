@@ -9,11 +9,11 @@
   <artifactId>de.techem.wurst.books.library</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-  	<dependencies>
+  <!-- <dependencies>
 		<dependency>
 			<groupId>de.techem.wurst.store</groupId>
 			<artifactId>de.techem.wurst.store.library</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-	</dependencies>
+	</dependencies>  -->	
 </project>

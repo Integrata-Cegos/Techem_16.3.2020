@@ -14,7 +14,7 @@ public class StoreRestService {
 
 	@GetMapping(path = "store/{cat}/{item}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public String getStock(@PathVariable("cat") String category, @PathVariable("item")String item) {
-		return "Stock: " + storeService.getStock(category, item);
+		return "" + storeService.getStock(category, item);
 	}
 	
 	

@@ -40,6 +40,7 @@ public class BooksWebService {
 		booksService.deleteBookByIsbn(isbn);
 	}
 
+	@GetMapping(path="books/")
 	public Collection<Book> findAllBooks() {
 		return booksService.findAllBooks();
 	}

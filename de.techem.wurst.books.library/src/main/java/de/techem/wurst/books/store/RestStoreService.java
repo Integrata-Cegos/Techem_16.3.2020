@@ -12,6 +12,8 @@ public class RestStoreService {
 	private RestTemplate restTemplate;
 	public int getStock(String category, String id) {
 	
+		System.out.println("Request: http://localhost:8080/store/" + category + "/" + id);
+		
 		return Integer.parseInt(restTemplate.getForObject("http://localhost:8080/store/" + category + "/" + id, String.class));
 	}
 	

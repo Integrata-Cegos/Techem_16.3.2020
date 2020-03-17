@@ -58,10 +58,14 @@ public class DatabaseBooksService implements BooksService {
 	@Transactional
 	public Book findBookByIsbn(String isbn) throws BookException {
 		try {
+			System.out.println("findBookByIsbn: " + isbn);
 			Book result = entityManager.find(Book.class, isbn);
+			System.out.println("result findBookByIsbn: " + isbn);
 			result.setAvailable(restStoreService.getStock("books", isbn) > 0);
+			System.out.println("set findBookByIsbn: " + isbn);
 			return result;
 		} catch (NullPointerException e) {
+			System.out.println(e);
 			throw new BookException(BookException.BookExceptionType.NOT_FOUND, isbn);
 		}
 	}

@@ -1,4 +1,4 @@
-package de.techem.lukas.books.executable;
+package de.techem.lukas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -15,10 +15,5 @@
 			<artifactId>de.techem.lukas.books.library.isbngenerator</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>de.techem.lukas</groupId>
-			<artifactId>de.techem.lukas.store.library</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 </project>

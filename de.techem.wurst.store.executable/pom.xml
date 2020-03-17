@@ -12,6 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>de.techem.wurst.store</groupId>
 			<artifactId>de.techem.wurst.store.library</artifactId>

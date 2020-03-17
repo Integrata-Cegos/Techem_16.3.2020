@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 sergey ready
 =======
 wurst ready
 >>>>>>> wurst
+=======
+sawitzki ready
+>>>>>>> sawitzki

@@ -13,12 +13,11 @@ public class InitalContent {
 
 	public InitalContent() {
 		contentMap.put("1", new Content("1", Arrays.asList("blutwurst", "salami", "bockwurst"), "schmeckt gut"));
+		contentMap.put("2", new Content("2", Arrays.asList("wildscheinsalami", "schinkenspeck", "fleischkaese"), "schmeckt nicht so gut"));
 	}
 
 	public Map<String, Content> getContentMap() {
 		return contentMap;
 	}
 	
-	
-
 }

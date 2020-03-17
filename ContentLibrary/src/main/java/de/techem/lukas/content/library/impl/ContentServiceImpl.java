@@ -49,8 +49,8 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public Content findById(String ressource) {
 		try {
-			Content content = contentStore.entrySet().stream().filter(c -> c.getValue().getId().equals(ressource))
-					.map(Map.Entry::getValue).findFirst().get();
+			Content content = contentStore.values().stream().filter(c -> c.getId().equals(ressource))
+					.findFirst().get();
 			return content;
 		} catch (Exception e) {
 			return null;
@@ -61,8 +61,8 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<String> findByTag(String tag) {
 		try {
-			List<String> content = contentStore.entrySet().stream().filter(c -> c.getValue().getTags().contains(tag))
-					.map(Map.Entry::getValue).map(c -> c.getId()).collect(Collectors.toList());
+			List<String> content = contentStore.values().stream().filter(c -> c.getTags().contains(tag))
+					.map(c -> c.getId()).collect(Collectors.toList());
 			return content;
 		} catch (Exception e) {
 			return null;

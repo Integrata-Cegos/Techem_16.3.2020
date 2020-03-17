@@ -6,9 +6,9 @@ import static org.junit.Assert.fail;
 
 import java.util.Collection;
 
-import org.javacream.books.warehouse.api.BookException;
-import org.javacream.books.warehouse.api.Book;
-import org.javacream.books.warehouse.api.BooksService;
+import de.techem.lukas.books.library.booksservice.api.Book;
+import de.techem.lukas.books.library.booksservice.api.BookException;
+import de.techem.lukas.books.library.booksservice.api.BooksService;
 
 public class TestActor {
 

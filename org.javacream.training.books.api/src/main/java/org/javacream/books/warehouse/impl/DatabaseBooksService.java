@@ -15,22 +15,23 @@ import org.javacream.books.warehouse.api.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@EnableBinding(Processor.class)
+@EnableBinding(Source.class)
 public class DatabaseBooksService implements BooksService {
 
-	private Processor processor;
+	@Autowired
+	private Source source;
 	@Autowired
 	@SequenceStrategy
 	private IsbnGenerator isbnGenerator;
 	@Autowired
 	private ReadingStoreService storeService;
-
 
 	public void setIsbnGenerator(IsbnGenerator isbnGenerator) {
 		this.isbnGenerator = isbnGenerator;
@@ -47,7 +48,7 @@ public class DatabaseBooksService implements BooksService {
 		book.setTitle(title);
 		entityManager.persist(book);
 		Message<String> message = MessageBuilder.withPayload(isbn).build();
-		processor.output().send(message);
+		source.output().send(message);
 		return isbn;
 	}
 
@@ -78,12 +79,12 @@ public class DatabaseBooksService implements BooksService {
 
 	@Transactional
 	public void deleteBookByIsbn(String isbn) throws BookException {
-			Book toDelete = entityManager.find(Book.class, isbn);
-			if (toDelete == null){
-				throw new BookException(BookException.BookExceptionType.NOT_DELETED, isbn);
-				
-			}
-			entityManager.remove(toDelete);
+		Book toDelete = entityManager.find(Book.class, isbn);
+		if (toDelete == null) {
+			throw new BookException(BookException.BookExceptionType.NOT_DELETED, isbn);
+
+		}
+		entityManager.remove(toDelete);
 	}
 
 	public Collection<Book> findAllBooks() {

@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @RestController
 @RequestMapping(path = "api")
+@ManagedResource(description = "Store Management", objectName = "javacream:service=store")
 public class StoreWebServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(StoreWebServiceApplication.class, args);
@@ -74,6 +77,11 @@ public class StoreWebServiceApplication {
 		catch(Exception e) {
 			return 0;
 		}
+	}
+	@ManagedOperation(description = "dump store to console")
+	public void dumpStock() {
+		System.out.println(entityManager.createQuery("select stock from StoreEntry as stock", StoreEntry.class).getResultList());
+		
 	}
 
 }

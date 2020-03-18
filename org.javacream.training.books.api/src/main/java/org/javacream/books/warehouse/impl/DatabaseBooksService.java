@@ -13,12 +13,18 @@ import org.javacream.books.warehouse.api.Book;
 import org.javacream.books.warehouse.api.BookException;
 import org.javacream.books.warehouse.api.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@EnableBinding(Processor.class)
 public class DatabaseBooksService implements BooksService {
 
+	private Processor processor;
 	@Autowired
 	@SequenceStrategy
 	private IsbnGenerator isbnGenerator;
@@ -40,6 +46,8 @@ public class DatabaseBooksService implements BooksService {
 		book.setIsbn(isbn);
 		book.setTitle(title);
 		entityManager.persist(book);
+		Message<String> message = MessageBuilder.withPayload(isbn).build();
+		processor.output().send(message);
 		return isbn;
 	}
 

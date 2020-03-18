@@ -8,6 +8,9 @@
 		<artifactId>org.javacream.training.build.parents.library</artifactId>
 		<version>1.0</version>
 	</parent>
+	<properties>
+		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+	</properties>
 	<dependencies>
 		<!-- <dependency> <groupId>org.javacream.training</groupId> <artifactId>org.javacream.training.telekom.academy.store</artifactId> 
 			<version>1.0</version> </dependency> -->
@@ -16,6 +19,20 @@
 			<artifactId>org.javacream.training.util</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+		</dependency>
 	</dependencies>
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

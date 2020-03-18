@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.javacream.training</groupId>
-    <artifactId>org.javacream.training.build.parents.spring</artifactId>
+    <artifactId>org.javacream.training.build.parents.executable</artifactId>
     <version>1.0</version>
   </parent>
   <groupId>de.techem.wurst</groupId>

@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<parent>
 	<groupId>org.javacream.training</groupId>
-	<artifactId>org.javacream.training.build.parents.springboot</artifactId>
+	<artifactId>org.javacream.training.build.parents.executable</artifactId>
 	<version>1.0</version>
 	</parent>
 

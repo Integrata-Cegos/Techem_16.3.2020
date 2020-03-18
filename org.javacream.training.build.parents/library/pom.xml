@@ -11,10 +11,9 @@
 		<version>2.2.5.RELEASE</version>
 		<relativePath />
 	</parent>
-	<properties>
-		<repository_base_url>http://10.12.6.1:8081</repository_base_url>
-	</properties>
-	
+	<!--  <properties>
+		<repository_base_url>http://127.0.0.1:8085</repository_base_url>
+	</properties>  -->	
 	
 	<dependencies>
 			<dependency>
@@ -51,7 +50,7 @@
 		</dependency>
 	
 	</dependencies>
-	<distributionManagement>
+	<!--  <distributionManagement>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
 			<id>nexus</id>
@@ -66,5 +65,5 @@
 			<url>${repository_base_url}/repository/maven-snapshots/</url>
 			<layout>legacy</layout>
 		</snapshotRepository>
-	</distributionManagement>
+	</distributionManagement>  -->
 </project>

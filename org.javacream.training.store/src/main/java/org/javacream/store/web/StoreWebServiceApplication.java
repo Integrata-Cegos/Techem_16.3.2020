@@ -1,5 +1,7 @@
 package org.javacream.store.web;
 
+import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -7,6 +9,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @RestController
 @RequestMapping(path = "api")
+@EnableBinding(OrderStreamingInput.class)
 public class StoreWebServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(StoreWebServiceApplication.class, args);
@@ -74,6 +79,16 @@ public class StoreWebServiceApplication {
 		catch(Exception e) {
 			return 0;
 		}
+	}
+	
+	
+	@Transactional
+	@StreamListener("orderingInput") public void handleOrdering(Map<String, Object> data) {
+		String id = data.get("orderedId").toString();
+		String category = data.get("orderedCategory").toString();
+		Integer stock= (Integer) readStock(category, id);
+		stock -= (Integer)data.get("orderedAmount"); 
+		saveStock(category, id, stock);
 	}
 
 }

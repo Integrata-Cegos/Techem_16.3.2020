@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,6 +83,10 @@ public class StoreWebServiceApplication {
 	public void dumpStock() {
 		System.out.println(entityManager.createQuery("select stock from StoreEntry as stock", StoreEntry.class).getResultList());
 		
+	}
+	
+	@ManagedAttribute(description = "The actual Store Size") public int getStoreSize() {
+		return entityManager.createQuery("select count(*) from StoreEntry").getFirstResult();
 	}
 
 }

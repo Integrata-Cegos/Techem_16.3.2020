@@ -1,10 +1,10 @@
 package org.javacream.store.web;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +30,15 @@ public class StoreWebServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(StoreWebServiceApplication.class, args);
 	}
-	
+
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.any()).build();
 	}
-	@PersistenceContext private EntityManager entityManager;
+
+	@Autowired
+	StoreRepository storeRepository;
 
 	@GetMapping(path = "store/{category}/{item}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public String getStock(@PathVariable("category") String category, @PathVariable("item") String item) {
@@ -49,29 +51,19 @@ public class StoreWebServiceApplication {
 			@RequestHeader("stock") int stock) {
 		saveStock(category, item, stock);
 	}
-	
+
 	private void saveStock(String category, String id, int stock) {
 		if (category == null || id == null) {
 			throw new IllegalArgumentException("category and id must not be null");
 		}
-		StoreId storeId = new StoreId(category, id);
-		
-		StoreEntry storeEntry = entityManager.find(StoreEntry.class, storeId);
-		if (storeEntry == null) {
-			entityManager.persist(new StoreEntry(category, id, stock));
-		}else {
-			entityManager.merge(new StoreEntry(category, id, stock));
-		}
-	}	
+		storeRepository.save(new StoreEntry(category, id, stock));
+	}
+
 	private int readStock(String category, String id) {
-		try {
-			Query query = entityManager.createQuery("select stock from StoreEntry where category = :category and itemId = :id");
-			query.setParameter("category", category);
-			query.setParameter("id", id);
-			Integer result = (Integer) query.getSingleResult();
-			return result;
-		}
-		catch(Exception e) {
+		Optional<StoreEntry> result = storeRepository.findById(new StoreId(category, id));
+		if (result.isPresent()) {
+			return result.get().getStock();
+		} else {
 			return 0;
 		}
 	}

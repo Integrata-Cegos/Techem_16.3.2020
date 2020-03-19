@@ -29,6 +29,18 @@ public class DatabaseStoreService implements StoreService {
 			return 0; 
 		}
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public StoreEntry dumpStock() {
+		Query query = entityManager.createNativeQuery("select stock from store as stock", StoreEntry.class);
 
+		try {
+			StoreEntry result = (StoreEntry) query.getSingleResult();
+			return result;
+		} catch (Exception e) {
+			return null; 
+		}
+	}
 
 }
